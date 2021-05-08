@@ -11,6 +11,7 @@ PROXY_ENABLE = True
 # 3.  "www.dailiurl.com/path/xxxx"
 # 4.  "username:password@www.dailiurl.com/path/xxxx"
 PROXY = ''
+PROXY_HTTP_TUNNEL = True
 
 #IP代理池，优先级低于PROXY高于PROXY_POOL_RAW
 # * 建议使用购买的代理池API，一次请求一个代理，每次请求不重复，请求间隔为INTERVAL
@@ -20,7 +21,8 @@ PROXY = ''
 # 1、 "http:http://39.108.59.38:8888/Tools/proxyIP.ashx?OrderNumber=xxxx&poolIndex=xxx&cache=1&qty=1"
 # 2、 ['1.1.1.1:1111','1.1.1.1:1112','1.1.1.1:1113',...]
 # 3、 "D://proxyfile.txt"
-PROXY_POOL =  'https://xxxxxxxxxxxxget?token=&amount=1&proxy_type=http&format=txt&splitter=rn&expire=300'
+# PROXY_POOL = 'http://127.0.0.1:5010/get'
+PROXY_POOL = ''
 
 #未经过验证有效性的代理池文件,如:'txt/rawproxy.txt'，如果PROXY_POOL是一个文件
 #那么程序会进行自动检测代理的有效性后将可用代理写入PROXY_POOL
@@ -61,9 +63,11 @@ PROVINCE_FILE_PATH = 'JSON/province.json'
 MongoDB = {
     'host'          :'127.0.0.1',
     'port'          :27017,
-    'database'      :'大众点评',
-    'records'       :'爬取记录',
-    'searchDB'      :'大众点评地图搜索',
+    'database'      :'DPdb',
+    'records'       :'Records',
+    'searchDB'      :'DPSearchdb',
+    'areaDB'        :'areaDB',
+    'categoryDB'    :'categoryDB',
     'user'          :'',
     'password'      :'',
 }
@@ -106,7 +110,7 @@ INTERVAL = 0
 #数组表示(a,b)返回a到b范围内的随机秒数
 #开始随机等待将RANDOM_SLEEP置True
 RANDOM_SLEEP = True
-RANDOM_INTERVAL = (1,10)
+RANDOM_INTERVAL = (1,3)
 
 #请求超时时间设置：秒
 TIMEOUT = 10
@@ -163,4 +167,4 @@ LOG_FORMAT = {
 }
 
 #获取所有点评必须使用大众点评注册用户的登陆cookie
-COOKIE = ''
+COOKIE = '_lxsdk_cuid=178bfe8940cc8-0bd0ef51260b1c-336b7c08-1ea000-178bfe8940cc8; _lxsdk=178bfe8940cc8-0bd0ef51260b1c-336b7c08-1ea000-178bfe8940cc8; _hc.v=d89a1ec1-b844-9b2c-6caf-233b85d32020.1618127394; ctu=6e10f35fb298c44e14d504f5dcffdfefaed2ffb9502c21661dc68e214237b515; s_ViewType=10; fspop=test; _dp.ac.v=4ed4c8fc-5559-4c43-81b1-6d6af0b68ba0; _lx_utm=utm_source=google&utm_medium=organic; Hm_lvt_602b80cf8079ae6591966cc70a3940e7=1620454003,1620454073,1620454130,1620461090; dper=105274e19f11bef99cec936ba91d4b29bebc0eba2a9e147bc30af3755e1345d73bdccfc5653ea1034a8cda0ae880a1c409b4592a12a996b3e566030e9fc5dab86d7a0680bae3ff810533e41b9e2c877a89a28f00ed3618c42cb9eef6e4ed4d45; ll=7fd06e815b796be3df069dec7836c3df; ua=dpuser_1733493889; uamo=18019066937; cy=2; cye=beijing; dplet=f320966d72a5ebcb47a947fd0b4a204f; Hm_lpvt_602b80cf8079ae6591966cc70a3940e7=1620492065; _lxsdk_s=1794cda958f-dda-37a-abf||18'

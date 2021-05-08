@@ -11,9 +11,10 @@ from decorator import timer
 from log import getLogger
 from util.thread import CrawlThread
 from w3lib.url import is_url
-from util.proxy import get_proxy,gen_proxy
+from util.proxy import get_proxy,gen_proxy,delete_proxy
 from exception import ForbiddenProxy
 from bs4 import BeautifulSoup as bs
+from urllib.parse import urlparse
 
 logger = getLogger(__name__)
 
@@ -52,6 +53,10 @@ def send_http(session,method,url,*,
             except Exception as e:
                 logger.debug(f'[请求异常-代理:{proxy}] {e.__class__.__name__}:{e}')
                 fails+=1
+                try:
+                    delete_proxy(urlparse(proxy.get('http')).netloc)
+                except:
+                    proxy_url = 0
                 if PROXY_ENABLE:
                     proxy = get_proxy()
                 raise e
@@ -71,6 +76,10 @@ def send_http(session,method,url,*,
                     fake_city_list_response(response, kind):
                 fails+=1
                 logger.debug(f'[无效代理-{code}] {proxy} 请求无效.{headers["User-Agent"]}')
+                try:
+                    delete_proxy(urlparse(proxy.get('http')).netloc)
+                except:
+                    proxy_url = 0
                 if code in FORBIDDEN_CODE:
                     forbiddens+=1
                 if not _ua:
