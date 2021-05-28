@@ -20,7 +20,7 @@ class CitySpider(object):
     def __init__(self, cityName, area=None):
         self.cityName = cityName
         self.area = area
-        self.city = City(cityName, searchDB=Database(MongoDB))
+        self.city = City(cityName, searchDB=Database(MongoDB), commentsDB=Database(MongoDB))
         self.city.get()
         self.category_list = []
         self.coa_category = []
@@ -45,7 +45,7 @@ class CitySpider(object):
         logger.info(f'获取 “{self.cityName}” 所有区成功.')
         if save:
             areaDB = init_area_db(Database(MongoDB))
-            areaDB.save({self.cityName: area_list}, tname='Area')
+            areaDB.save({'area': area_list}, self.cityName)
             logger.info(f'已将 “{self.cityName}” 所有区信息保存到数据库中.')
         return area_list
 
@@ -84,7 +84,7 @@ class CitySpider(object):
         logger.info(f'获取 “{self.cityName}” 所有店铺分类成功.')
         if save:
             categoryDB = init_category_db(Database(MongoDB))
-            categoryDB.save({self.cityName: self.category_list}, tname='Category')
+            categoryDB.save({'category': self.category_list}, tname=self.cityName)
             logger.info(f'已将 “{self.cityName}” 所有店铺分类信息保存到数据库中.')
         return self.city.category
 
@@ -92,10 +92,18 @@ class CitySpider(object):
         """
         获取该城市所有的店铺的信息，并保存在数据库中
         """
-        self.process_category(self.city.category, self.category_list)
         for area in self.get_area():
             for category in self.fin_category:
                 if category == '全部分类':
                     continue
-                # self.city.search('', category=category, location=area, filter=None, sort='按人气排序', save=True, details=False, comments=False)
+                # self.city.search('', category=category, location=area, filter=None, sort='按人气排序', save=True, details=True, comments=False)
                 self.city.async_search('', category=category, location=area, filter=None, sort='按人气排序', save=True, details=False, comments=False)
+        return True
+
+    def save_shop_comments(self):
+        """
+        获取该城市所有的店铺的评论信息，并保存在数据库中
+        """
+        self.city.get_comments(self.get_area(),self.fin_category)
+        return True
+

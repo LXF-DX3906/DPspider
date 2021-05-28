@@ -1,5 +1,8 @@
 #coding:utf-8
 import time
+
+from dbhelper import Database
+from util.CitySpider import init_category_db, init_area_db
 from util.tools import *
 from util.city import *
 from search import Search
@@ -34,8 +37,8 @@ class City(object):
         self.map_headers = SEARCH_MAP_POST_HEADERS
         self._pinyin = get_pinyin(city)
         self.session = requests.session()
-        self.db = init_db(commentsDB)
         self.searchDB = init_search_db(searchDB)
+        self.commentsDB = init_comments_db(commentsDB)
         self.map_page = None
         self.city_list = None
         self.homepage = None
@@ -356,7 +359,7 @@ class City(object):
                         #是否爬取商铺的点评数据
                         if comments:
                             if i['点评数']:
-                                comment = Comments(shopId,db=self.db)
+                                comment = Comments(shopId,db=self.commentsDB)
                                 comment.get_reviews(save=save,tname=hint,
                                                     path=comments_path,write_mode=comments_mode,
                                                     count=comments_count,reget=True)
@@ -391,6 +394,56 @@ class City(object):
                     continue
                 break
             break
+        return results
+
+    @map_required
+    @timer
+    def get_comments(self, area_list, category_list,
+                     comments_count=COMMENTS_RESULTS, comments_path=None,
+                     comments_mode='a'):
+        """
+        获取该城市的所有评论的搜索结果
+        :param area_list:城市区域列表
+        :param category_list:店铺类别列表
+        :param comments_count:需要下载的商铺点评数最大值
+        :param comments_path:本地保存点评数据的文件路径
+        :param comments_mode:本地存储点评数据文件操作模式
+        """
+        page = 1
+        _count = 0
+        _region_count = 0
+        pageCount = 0
+        shop_proxy = None
+        results = []
+        shop_headers = HEADERS
+
+        for area in area_list:
+            for category in category_list:
+                if category == '全部分类':
+                    continue
+                hint = together(self.city, area, category, '')
+                tname = together(self.city, area, category, None, '', '全')
+                shop_info_List = self.searchDB.select({}, tname=tname)
+                if shop_info_List:
+                    for db_shopInfo in shop_info_List:
+                        shopId = db_shopInfo['店铺ID']
+                        # 爬取详细的商铺信息
+                        resp = get_city_shop_info(shopId, self.id, shop_proxy, shop_headers)
+                        if resp:
+                            shop_info, shop_proxy, shop_headers = resp
+                            db_shopInfo.update(shop_info)
+                        else:
+                            continue
+                        # 更新数据库信息
+                        if self.searchDB:
+                            self.searchDB.update({'店铺ID':{'=':shopId}}, db_shopInfo, tname=tname)
+                        results.append(db_shopInfo)
+                        # 爬取商铺的点评数据
+                        if db_shopInfo['点评数']:
+                            comment = Comments(shopId, db=self.commentsDB)
+                            comment.get_reviews(save=True, tname=hint,
+                                                path=comments_path, write_mode=comments_mode,
+                                                count=comments_count, reget=True)
         return results
 
     @map_required
@@ -539,7 +592,7 @@ class City(object):
                 # 是否爬取商铺的点评数据
                 if comments:
                     if i['点评数']:
-                        comment = Comments(shopId, db=self.db)
+                        comment = Comments(shopId, db=self.commentsDB)
                         comment.get_reviews(save=save, tname=tname,
                                             path=comments_path, write_mode=comments_mode,
                                             count=comments_count, reget=True)

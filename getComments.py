@@ -1,0 +1,28 @@
+from CitySpider import CitySpider
+from comment import Comments
+from dbhelper import Database
+from log import getLogger
+from util.city import init_comments_db
+from config import MongoDB
+
+logger = getLogger(__name__)
+#
+# while True:
+#     try:
+#         citySpider = CitySpider('上海')
+#         if citySpider.save_shop_comments():
+#             break
+#     except:
+#         print('重新执行保存评论程序')
+#         logger.debug(f'重新执行保存评论程序')
+# cityList = ['上海']
+# for cityName in cityList:
+#     citySpider = CitySpider(cityName)
+#     citySpider.get_area(save=True)
+#     citySpider.get_category(save=True)
+commentsDB = init_comments_db(Database(MongoDB))
+shopId_list =[ "jP3YpIoLqaljyubk", "k4Iu2JQ91Wk41qjI", "H40Qg42dzbVjKDFX", "G1Dk3HxdesOijK1M", "k98zHWVG0LvxOps7", "H9frHtAYhwMus16B", "H4XmSOeHDBiYu1IZ", "k3KYmMzbXlaRK0FJ", "l1JpNElJ2kXKi4JN", "l3o0OLgdStIUzRfB", "H6kjfusig9Q0cK0K", "k30sKl77PHb7IFDQ", "l57CJvGEtSFx8wNI", "l7xindmRaEdyY5Tn", "l1HU0qrWDul57k35", "G8zYWpKOwdbE1VrP", "l5LIFnuGRuftPihV", "k5K4HpwmBXBjWp8v", "G1AoCT767WTT0YMy", "k4aMta58i7RZZi4k", "H98rq56ZNQ1cls4T", "k5Gl4g3RZrkUc1r2", "l1KvwxcdqviRVhZo", "G3CUJMKe2GyLqsud", "k5PqMUXNGHylZ34d", "G4qRxdPNlOPZoTmh", "lalvI86XRED7aHc5", "kahSWHudTeP4lt6g", "k9Dj8EMtZ9eVedT0", "G6AoUF1nPd7266km", "H6keUnEwp3iX39Pv", "k5UAEDdidLmCGkaP", "jEY6s3Gp5yhLckxu", "k4R7WOFHGPGleArH", "H9SltKJ36sA5fMNG", "k6PqwGSzDY4kHRWQ", "jCw9VwkfMYRbrODc", "H5Rvj6P2h75xL9P7", "l5iYpgOqk7ezKOuj", "k9Ksy8vFduLw26hF", "k7mo5Ahi9GEiPrzL", "G9jysntot0XZ37CT", "k9VxB2qk4XnE7wM1", "k6NhlRKU47OrLUqU", "GaS9TdPdfciTPKFp", "l16GKK7uxP4LMm8N", "l9lm1EWAFXttVmjc", "H2GdCnJTpcqp8SN6", "k2IVFLqODqWXTazJ", "G99XQSWm2ajU7jjf", "k3hO9n4Dgll1xQ4P", "k8w6e6WQxmiRhoSd", "jSGs25ePauvCIR01", "EYqZ5aR1r1KxVAC7", "k97YcmYwEoqxu1yW", "H3XSJ7SBJDXTLdJJ", "Ha9O3Ds9wqAR7yvO", "k2zhJxTJ8YFWlQ4u", "k7hmiqNs9vlTVkrg", "k70vzF4hCxRaKoty", "Ga4ANzSl7FLV5FYt", "H7WBaNK5kr0s5g7F", "H4AyVGSQSRBD0AMo", "kas827pkVN7w6pvW", "l3sxBpI0aPSTVaYV", "G41hmhsYP2A2713m", "k1MADx6btj55MGro", "l8ayyjzoEgnpIGUw", "H3GyUL0OtIzJpLqg", "H7J3cvZEZFzLcJT4", "G9gdzegH2hhQ1qhA", "H4a3Rgrpr9n3iGJi", "EzrUiWgqFxB0ewLs", "H9M5fvSs9wTS6BLa", "k1UFp0NGsEyj3x0i", "H1V1tzNhiYnNmW0f", "FjtCAFV25cj8nxyw", "G2elYW8J9JgO7vWp", "G62DiAwzlZdlju2s", "k4pWCBsmh0SAPISe", "k9JlgF4uhGOAt6J3", "l8aiyscbUxwUdGN5", "k8qbQU1WpLz7xMNy", "l2Wn06dD7wDWmUtj", "k41McNRHD7wMG97A", "ErQgFOXLToLuDRHG", "FyqrTUTxOcSXFKcb", "EhMuQr6whIlWnnDI", "G4nJKdVeqUUw0d3r", "H4OMZSPVIecQ7RQu", "l67mWjlC6954yC8Z", "H7DoaelZI0ZcA3uY", "l2PkPMPCf0XX7KUU", "l9ehuiLeDqdjFIub", "E7OnFmQ1YWOyKVvx", "G3dIHTSxDfev1LBF", "k3AlOl5zYKfPxjTQ", "l4yuRvVFUFU7MLqw", "l1uHnCaPxySwWir3", "G2QoH70btpEU9jRd", "G3YTMmsHlwIMUUs9", "l12monidoM7MOk4W", "kalDdl4iiJKNO5tV", "G7q5yPpdJDodTc1A", "H4pRtW9z7VC9msQH", "l8SHxP4Ije5HWDHy", "k3bhOr7jNci8cTMy", "l4t826o9fK6Y0QEl", "ka726hORAaDmvoB3", "G29xW20oa4Ptapnb", "H94kHsTf5onzq4Fa", "l3mZQ2Xvi7pqNfls", "H2toKQTMbvtNFyy1", "l8WGLuYDZpkHZkFV", "l6PmUmNhqnGKMPXv", "H5lBu6dORkIY5RIr", "G4ROK2gHDiTfql7V", "G2ayA1KJ2LfvtoEO", "l66O2vEn6blPSZ8c", "G8Wt7DItrHLtSjD1", "k4VE8OZ2eIwvCe7s", "l8hIBGrSy0WvW4BY", "kaxfD5sX8AbJ75IM", "k67rPjsFnUA1mHMQ", "GaeiAr8lJR8G8mWt", "kab1rfTl3LUmtEDs", "l4ylp9N1YbpdKaYq", "H9RCDRbubGRkZNPg", "k4C8MvFWhpuWyxev", "k2mkC9IPLtMfGtsD", "k6cESjlfV98TaH30", "i3SgPeMjweH33axu", "H4jWJ2PR7Jhs1Ngw", "k802FoFAj3SNGgNm", "k7MubFPxWUdQncr4", "EJ7lYdQGR9kgdCDe", "l9GPD4yv35uIhtn5", "H33bP60imYDdVdUp", "jLB6jcIowO3CzQCU", "k43hkjrMDZzkO4qv", "k1VTQbHDSsnzMXpX", "H6GF9Y5cJachZADW", "l5G8iDZiJhPKByYU", "EXN8eGQ5duJ2oYyO", "k8lWyrEMULLh4bfd", "G40kxyIFIaGCRTKL", "k2EJYtfzMGcjIlGv", "H4z77xjT21pKvQGA", "H4SBXUpcet3KdXdL", "k8rg42E2hOCMFViI", "G2Rw9wAIfYIau5Yv", "l3VK6fzVeRoxWcbQ", "k4EFwADHxvz1A61A", "FmKsF7pK2mLj7cOa", "k1NSsbT0nLpFEesx", "G5KLHrHVEMqwjxXD", "H6U6Ffl5aNmjly1N", "EaLKGtD2Yqn2X5Te", "G3yuJqpSTUkfWcvQ", "G3thfbO5D1f3qP8N", "l4e9mKH6GP3e8XQT", "l5MZwOh6QeCFjclA", "k6wjuBgXMxm1JioS", "G4vYj1DrQ6EeFYpB", "G8kOEORvyHmfd7d9", "k1KL4U8m5dkVnE1W", "l8V6p4cjND8Lekfc", "Ga1aSL6KIN4NsIN0", "k4KWBDDsu54dmt9B", "k7JWILD2NRKb2lnn", "k6rX2reK9SO41H2H", "G2hKYllDFn5oKVn4", "G2JUmdLG8mM47N4E", "GamX5BDb1BgWtXoA", "k4GI5SUB1mjBoLJ9", "l9ltyP9cp0zhSPiT", "H6b4P8nSK3ZAkYIY", "F1hCw1qeLv75JH4E", "H2i1M0fW2U08CRWt", "Harv5MAWK0bQv0fq", "l357E6QwMdevgYl3", "H5bUAdK2MSuWh0p3", "H2wvU2fxH20LZbhZ", "k3sX5dIlcQAAwokR", "G4ut4kGORA0R7crt", "l2e8Xs3xbZaLCwqx", "H7aIdiqmsIsqPGIe", "G5zXfkvCfvPW1BRe", "k1gNgNvuFyJLGj49", "Fpj4xrcN1Qa8JSSs", "l3VH1NLWCdo61QVl", "k7HIDP7R4gOJJ0cZ", "l8F9vbkiV5y5xcJW", "l7b2B5bU8pTFMhfi", "H9lS08A4xMcORWzV", "k1mfU2SPtp8Cw4Y0", "G7OnieYrwKA47hVx", "H1izrGvdk7Hq6nkH", "l7FkKkk0qD5FnWsV", "H5FDvhUZFogutHLj", "H4ckD4V2mGzrzoyl", "H8cBiDdNJJN0Otk8", "l17ZWY4OTTJZfal6", "G10X86KCEjCBQhlq", "H9PTuBt3yyg51K7i", "k6VSBwa6av5aX1Rh", "laSwmWJg2ynQQn8J", "l1PH4u7KlfEHpGwA", "H2XIr9v2WXBMo2RA", "G6BAhjIrC276KaQG", "k8ikGhLY3IiekeIS", "H7e9SlhpTGM1rKJM", "jssJ1bk5VNELk5j7", "H8cX4akNJmNFamM4", "k5VDk6cBIagG6NCF", "G8hdqhbaL2bwOWFq", "G90moo8LxKbn63gP", "l2A8h0NJ1cUFToXK", "iyeO1VKg9mHuPkwp", "GanH1P5yPG0WIDhB", "ladZOw9HFGpJSlNG", "G3jXNAdDUqNPJCCe", "G7TA9dkUk6qMN2h0", "Ga8i1XsYVr6caY5G", "HaXqFaf9ppqJlmsL", "H6JOsziudlpCNmla", "G10PCarran914WE4", "k2sVzlMGJKsjt29Y", "H7niTaCNFIcetUlC", "H8Dsm3WcDXl6w2qq", "l9ETnP235WWBrKZR", "H1nSMBc6nez26lbU" ]
+
+for shopId in shopId_list:
+    comment = Comments(shopId, db=commentsDB)
+    comment.get_reviews(save=True, tname='上海-杨浦区-数码产品', reget=True)

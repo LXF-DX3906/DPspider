@@ -1,4 +1,6 @@
 #coding:utf-8
+from config import MongoDB
+
 
 def init_db(db):
     if db and not db.connected:

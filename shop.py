@@ -15,6 +15,7 @@ class Shop(object):
 	大众点评商铺
 	"""
 	api = API_SHOP
+	# api = API_SHOP_DETAIL
 
 	def __init__(self,shopId):
 		self.id = shopId

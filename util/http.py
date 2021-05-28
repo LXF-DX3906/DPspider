@@ -52,6 +52,7 @@ def send_http(session,method,url,*,
                                                            **kwargs)
             except Exception as e:
                 logger.debug(f'[请求异常-代理:{proxy}] {e.__class__.__name__}:{e}')
+                logger.info(f'[请求异常-代理:{proxy}] {e.__class__.__name__}:{e}')
                 fails+=1
                 try:
                     delete_proxy(urlparse(proxy.get('http')).netloc)
@@ -76,6 +77,7 @@ def send_http(session,method,url,*,
                     fake_city_list_response(response, kind):
                 fails+=1
                 logger.debug(f'[无效代理-{code}] {proxy} 请求无效.{headers["User-Agent"]}')
+                logger.info(f'[无效代理-{code}] {proxy} 请求无效.{headers["User-Agent"]}')
                 try:
                     delete_proxy(urlparse(proxy.get('http')).netloc)
                 except:

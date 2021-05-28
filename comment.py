@@ -26,7 +26,7 @@ class Comments(object):
     def __init__(self,shopId,db=None,cookie=None):
         self.id = shopId
         self.cookie = cookie
-        self.db = init_db(db)
+        self.db = db
         self.session = requests.Session()
         self.home_url = self.api.format(id=shopId,page=1)
         self.decrypter = Decrypter(shopId)

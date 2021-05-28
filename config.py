@@ -1,7 +1,7 @@
 import time 
 
 #是否使用代理
-PROXY_ENABLE = True
+PROXY_ENABLE = False
 
 #使用单个的代理ip，优先级最高
 #此项若有填写，则使用此代理，后面的不会考虑
@@ -11,7 +11,7 @@ PROXY_ENABLE = True
 # 3.  "www.dailiurl.com/path/xxxx"
 # 4.  "username:password@www.dailiurl.com/path/xxxx"
 PROXY = ''
-PROXY_HTTP_TUNNEL = True
+PROXY_HTTP_TUNNEL = False
 
 #IP代理池，优先级低于PROXY高于PROXY_POOL_RAW
 # * 建议使用购买的代理池API，一次请求一个代理，每次请求不重复，请求间隔为INTERVAL
@@ -21,8 +21,8 @@ PROXY_HTTP_TUNNEL = True
 # 1、 "http:http://39.108.59.38:8888/Tools/proxyIP.ashx?OrderNumber=xxxx&poolIndex=xxx&cache=1&qty=1"
 # 2、 ['1.1.1.1:1111','1.1.1.1:1112','1.1.1.1:1113',...]
 # 3、 "D://proxyfile.txt"
-# PROXY_POOL = 'http://127.0.0.1:5010/get'
-PROXY_POOL = ''
+PROXY_POOL = 'http://127.0.0.1:5010/get'
+# PROXY_POOL = ''
 
 #未经过验证有效性的代理池文件,如:'txt/rawproxy.txt'，如果PROXY_POOL是一个文件
 #那么程序会进行自动检测代理的有效性后将可用代理写入PROXY_POOL
@@ -66,6 +66,7 @@ MongoDB = {
     'database'      :'DPdb',
     'records'       :'Records',
     'searchDB'      :'DPSearchdb',
+    'commentsDB'    :'commentsDB',
     'areaDB'        :'areaDB',
     'categoryDB'    :'categoryDB',
     'user'          :'',
@@ -167,4 +168,4 @@ LOG_FORMAT = {
 }
 
 #获取所有点评必须使用大众点评注册用户的登陆cookie
-COOKIE = '_lxsdk_cuid=178bfe8940cc8-0bd0ef51260b1c-336b7c08-1ea000-178bfe8940cc8; _lxsdk=178bfe8940cc8-0bd0ef51260b1c-336b7c08-1ea000-178bfe8940cc8; _hc.v=d89a1ec1-b844-9b2c-6caf-233b85d32020.1618127394; ctu=6e10f35fb298c44e14d504f5dcffdfefaed2ffb9502c21661dc68e214237b515; s_ViewType=10; fspop=test; _dp.ac.v=4ed4c8fc-5559-4c43-81b1-6d6af0b68ba0; _lx_utm=utm_source=google&utm_medium=organic; Hm_lvt_602b80cf8079ae6591966cc70a3940e7=1620454003,1620454073,1620454130,1620461090; dper=105274e19f11bef99cec936ba91d4b29bebc0eba2a9e147bc30af3755e1345d73bdccfc5653ea1034a8cda0ae880a1c409b4592a12a996b3e566030e9fc5dab86d7a0680bae3ff810533e41b9e2c877a89a28f00ed3618c42cb9eef6e4ed4d45; ll=7fd06e815b796be3df069dec7836c3df; ua=dpuser_1733493889; uamo=18019066937; cy=2; cye=beijing; dplet=f320966d72a5ebcb47a947fd0b4a204f; Hm_lpvt_602b80cf8079ae6591966cc70a3940e7=1620492065; _lxsdk_s=1794cda958f-dda-37a-abf||18'
+COOKIE = '__mta=248291256.1621005254909.1621005254909.1621005254909.1; _lxsdk_cuid=178bfe8940cc8-0bd0ef51260b1c-336b7c08-1ea000-178bfe8940cc8; _hc.v=d89a1ec1-b844-9b2c-6caf-233b85d32020.1618127394; ctu=6e10f35fb298c44e14d504f5dcffdfefaed2ffb9502c21661dc68e214237b515; s_ViewType=10; _dp.ac.v=4ed4c8fc-5559-4c43-81b1-6d6af0b68ba0; fspop=test; uuid=B6CC1CD25A17BC07CFD7F786CDE52D96AB46DD7114D99341C4AFF282FF83511D; iuuid=B6CC1CD25A17BC07CFD7F786CDE52D96AB46DD7114D99341C4AFF282FF83511D; _lxsdk=B6CC1CD25A17BC07CFD7F786CDE52D96AB46DD7114D99341C4AFF282FF83511D; _ga=GA1.2.1278990306.1621841235; cy=1; cye=shanghai; dplet=47c9d2ac9f7a3afb46d95ecd73c95fd2; dper=105274e19f11bef99cec936ba91d4b29c88892a727572a986b63d0e6cde556533313b713e2e7faafd9b368f5e8c731afd29b7611a62860ebecfcc91fdd5c8de9f043328e11509ccc9bb682957aa8170e6f74adce4fecd3798ab616c0bde465a5; ll=7fd06e815b796be3df069dec7836c3df; ua=dpuser_1733493889; _lx_utm=utm_source=Baidu&utm_medium=organic; Hm_lvt_602b80cf8079ae6591966cc70a3940e7=1621841606,1622026763,1622028872,1622178793; Hm_lpvt_602b80cf8079ae6591966cc70a3940e7=1622178803; _lxsdk_s=179b164022d-fe-824-743||26'

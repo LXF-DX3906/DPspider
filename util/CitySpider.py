@@ -1,6 +1,7 @@
 from config import  MongoDB
 from log import getLogger
 
+
 logger = getLogger(__name__)
 
 

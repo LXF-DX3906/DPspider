@@ -25,6 +25,12 @@ def init_search_db(db):
         db.use_db(MongoDB['searchDB'])
     return db
 
+def init_comments_db(db):
+    if db and not db.connected:
+        db.connect()
+        db.use_db(MongoDB['commentsDB'])
+    return db
+
 def get_city_list(url,headers=HEADERS,proxy=None):
     result = send_http(requests.session(),
                        'get',
